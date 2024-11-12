@@ -1,4 +1,5 @@
 {
+    "play_clayball": true,
     "clayball_score": [15, 160],
     "stack_score": [70, 90],
     "account_delay": [5, 10],

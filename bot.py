@@ -868,56 +868,58 @@ class Clayton:
                         break
 
                     await asyncio.sleep(2)
+                    play_clayball = config['play_clayball']
+                    if play_clayball:
 
-                    start = await self.start_clayball(query)
-                    if start and start['session_id']:
-                        ticket = start['attempts']
-                        self.log(
-                            f"{Fore.MAGENTA + Style.BRIGHT}[ Game Clayball{Style.RESET_ALL}"
-                            f"{Fore.GREEN + Style.BRIGHT} Is Started {Style.RESET_ALL}"
-                            f"{Fore.MAGENTA + Style.BRIGHT}] [ ID{Style.RESET_ALL}"
-                            f"{Fore.WHITE + Style.BRIGHT} {start['session_id']} {Style.RESET_ALL}"
-                            f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}"
-                        )
-
-                        sleep = random.randint(10, 15)
-                        for remaining in range(sleep, 0, -1):
-                            print(
-                                f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().strftime('%x %X %Z')} ]{Style.RESET_ALL}"
-                                f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
-                                f"{Fore.MAGENTA + Style.BRIGHT}[ Wait for{Style.RESET_ALL}"
-                                f"{Fore.YELLOW + Style.BRIGHT} {remaining} {Style.RESET_ALL}"
-                                f"{Fore.WHITE + Style.BRIGHT}Seconds to Complete Game{Style.RESET_ALL}"
-                                f"{Fore.MAGENTA + Style.BRIGHT} ]{Style.RESET_ALL}   ",
-                                end="\r",
-                                flush=True
-                            )
-                            await asyncio.sleep(1)
-
-                        clayball_score = config['clayball_score']
-                        score = random.randint(min(clayball_score), max(clayball_score))
-                        end = await self.end_clayball(query, score)
-                        if end:
+                        start = await self.start_clayball(query)
+                        if start and start['session_id']:
+                            ticket = start['attempts']
                             self.log(
                                 f"{Fore.MAGENTA + Style.BRIGHT}[ Game Clayball{Style.RESET_ALL}"
-                                f"{Fore.GREEN + Style.BRIGHT} Is Completed {Style.RESET_ALL}"
-                                f"{Fore.MAGENTA + Style.BRIGHT}] [ Reward{Style.RESET_ALL}"
-                                f"{Fore.WHITE + Style.BRIGHT} {end['reward']} $CLAY {Style.RESET_ALL}"
+                                f"{Fore.GREEN + Style.BRIGHT} Is Started {Style.RESET_ALL}"
+                                f"{Fore.MAGENTA + Style.BRIGHT}] [ ID{Style.RESET_ALL}"
+                                f"{Fore.WHITE + Style.BRIGHT} {start['session_id']} {Style.RESET_ALL}"
                                 f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}"
                             )
+
+                            sleep = random.randint(10, 15)
+                            for remaining in range(sleep, 0, -1):
+                                print(
+                                    f"{Fore.CYAN + Style.BRIGHT}[ {datetime.now().strftime('%x %X %Z')} ]{Style.RESET_ALL}"
+                                    f"{Fore.WHITE + Style.BRIGHT} | {Style.RESET_ALL}"
+                                    f"{Fore.MAGENTA + Style.BRIGHT}[ Wait for{Style.RESET_ALL}"
+                                    f"{Fore.YELLOW + Style.BRIGHT} {remaining} {Style.RESET_ALL}"
+                                    f"{Fore.WHITE + Style.BRIGHT}Seconds to Complete Game{Style.RESET_ALL}"
+                                    f"{Fore.MAGENTA + Style.BRIGHT} ]{Style.RESET_ALL}   ",
+                                    end="\r",
+                                    flush=True
+                                )
+                                await asyncio.sleep(1)
+
+                            clayball_score = config['clayball_score']
+                            score = random.randint(min(clayball_score), max(clayball_score))
+                            end = await self.end_clayball(query, score)
+                            if end:
+                                self.log(
+                                    f"{Fore.MAGENTA + Style.BRIGHT}[ Game Clayball{Style.RESET_ALL}"
+                                    f"{Fore.GREEN + Style.BRIGHT} Is Completed {Style.RESET_ALL}"
+                                    f"{Fore.MAGENTA + Style.BRIGHT}] [ Reward{Style.RESET_ALL}"
+                                    f"{Fore.WHITE + Style.BRIGHT} {end['reward']} $CLAY {Style.RESET_ALL}"
+                                    f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}"
+                                )
+                            else:
+                                self.log(
+                                    f"{Fore.MAGENTA + Style.BRIGHT}[ Game Clayball{Style.RESET_ALL}"
+                                    f"{Fore.RED + Style.BRIGHT} Isn't Completed {Style.RESET_ALL}"
+                                    f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}              "
+                                )
                         else:
                             self.log(
-                                f"{Fore.MAGENTA + Style.BRIGHT}[ Game Clayball{Style.RESET_ALL}"
-                                f"{Fore.RED + Style.BRIGHT} Isn't Completed {Style.RESET_ALL}"
-                                f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}              "
+                                f"{Fore.MAGENTA + Style.BRIGHT}[ Game Stack{Style.RESET_ALL}"
+                                f"{Fore.RED + Style.BRIGHT} Isn't Started {Style.RESET_ALL}"
+                                f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}"
                             )
-                    else:
-                        self.log(
-                            f"{Fore.MAGENTA + Style.BRIGHT}[ Game Stack{Style.RESET_ALL}"
-                            f"{Fore.RED + Style.BRIGHT} Isn't Started {Style.RESET_ALL}"
-                            f"{Fore.MAGENTA + Style.BRIGHT}]{Style.RESET_ALL}"
-                        )
-                        break
+                            break
 
                 if ticket == 0:
                     self.log(
