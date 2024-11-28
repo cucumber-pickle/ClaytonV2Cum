@@ -86,6 +86,7 @@ class Clayton:
                 else:
                     return None
 
+
     async def user_authorization(self, query: str, retries=5):
         url = f'{self.base_url}/api/{self.api_base_id}/user/authorization'
         headers = {
@@ -621,6 +622,7 @@ class Clayton:
             return
         
         if user:
+            await self.save_user(query)
             self.log(
                 f"{Fore.MAGENTA + Style.BRIGHT}[ Account{Style.RESET_ALL}"
                 f"{Fore.WHITE + Style.BRIGHT} {user['user']['first_name']} {Style.RESET_ALL}"
