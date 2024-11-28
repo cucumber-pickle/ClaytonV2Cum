@@ -14,7 +14,7 @@ from core.helper import get_headers, countdown_timer, extract_user_data, config
 class Clayton:
     def __init__(self) -> None:
         self.base_url = "https://tonclayton.fun"
-        self.api_base_id = None
+        self.api_base_id = "aT83M535-617h-5deb-a17b-6a335a67ffd5"
 
     def clear_terminal(self):
         os.system('cls' if os.name == 'nt' else 'clear')
@@ -57,7 +57,9 @@ class Clayton:
             async with session.get(self.base_url) as response:
                 response.raise_for_status()
                 html = await response.text()
+                print(html)
                 match = re.search(r'\/assets\/index-[^"]+\.js', html)
+                print(match)
                 return match.group(0).split('/')[-1] if match else None
 
     async def fetch_api_base_id(self, retries=5, delay=3):
@@ -97,6 +99,7 @@ class Clayton:
         }
 
         for attempt in range(retries):
+
             try:
                 async with aiohttp.ClientSession() as session:
                     async with session.post(url, headers=headers, proxy=self.proxy) as response:
@@ -969,14 +972,13 @@ class Clayton:
 
     async def main(self):
         try:
-            await self.fetch_api_base_id()
-
             with open('query.txt', 'r') as file:
                 queries = [line.strip() for line in file if line.strip()]
             with open('proxies.txt', 'r') as file:
                 proxies = [line.strip() for line in file if line.strip()]
 
             while True:
+                # await self.fetch_api_base_id()
                 self.log(
                     f"{Fore.GREEN + Style.BRIGHT}Account's Total: {Style.RESET_ALL}"
                     f"{Fore.WHITE + Style.BRIGHT}{len(queries)}{Style.RESET_ALL}"
